@@ -1,0 +1,8 @@
+The tests in this folder are stored in JSON, with each key being the input data,
+and its value being the expected result. See below for specific details for each
+test suite.
+
+numbersTest: Tests for <http://dev.w3.org/cvsweb/~checkout~/html5/spec/
+  Overview.html?rev=1.169#numbers>. The expected result is given as an array
+  with six values, corresponding to (in this order): #unsigned, #signed,
+  #real-numbers, #ratios, #percentages-and-dimensions, and #lists.
