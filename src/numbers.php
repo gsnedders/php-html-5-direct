@@ -31,7 +31,6 @@
  *
  * @package html-5
  * @subpackage semantics
- * @version $Id: numbers.php 37 2007-07-17 20:52:40Z gsnedders $
  * @copyright 2007 Geoffrey Sneddon
  * @author Geoffrey Sneddon
  * @license http://opensource.org/licenses/bsd-license.php BSD License
@@ -61,7 +60,7 @@ class numbers
 	const unspecified = 2;
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#unsigned Unsigned integers}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#unsigned Unsigned integers}
 	 *
 	 * A string is a valid non-negative integer if it consists of one of more characters in the range U+0030 DIGIT ZERO (0) to U+0039 DIGIT NINE (9).
 	 *
@@ -122,7 +121,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#signed Signed integers}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#signed Signed integers}
 	 *
 	 * A string is a valid integer if it consists of one of more characters in the range U+0030 DIGIT ZERO (0) to U+0039 DIGIT NINE (9), optionally prefixed with a U+002D HYPHEN-MINUS ("-") character.
 	 *
@@ -209,7 +208,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#real-numbers Real numbers}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#real-numbers Real numbers}
 	 *
 	 * A string is a valid floating point number if it consists of one of more characters in the range U+0030 DIGIT ZERO (0) to U+0039 DIGIT NINE (9), optionally with a single U+002E FULL STOP (".") character somewhere (either before these numbers, in between two numbers, or after the numbers), all optionally prefixed with a U+002D HYPHEN-MINUS ("-") character.
 	 *
@@ -360,7 +359,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#ratios Ratios}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#ratios Ratios}
 	 *
 	 * @static
 	 * @access public
@@ -449,7 +448,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#find-a Find a number}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#find-a Find a number}
 	 *
 	 * It is given a string and a starting position, and returns either nothing, a number, or an error condition.
 	 *
@@ -489,7 +488,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#percentages-and-dimensions Percentages and dimensions}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#percentages-and-dimensions Percentages and dimensions}
 	 *
 	 * This is yet to be written in the specification, so this throws a fatal error.
 	 *
@@ -502,7 +501,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#lists Lists of integers}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#lists Lists of integers}
 	 *
 	 * A valid list of integers is a number of valid integers separated by U+002C COMMA characters, with no other characters (e.g. no space characters). In addition, there might be restrictions on the number of integers that can be given, or on the range of values allowed.
 	 *
