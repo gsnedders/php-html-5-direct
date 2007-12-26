@@ -66,11 +66,11 @@ class numbersTest extends PHPUnit_Framework_TestCase
 		{
 			if (is_int($expected) || is_array($expected))
 			{
-				$this->assertEquals($expected, call_user_func(array('numbers', $method), $test_data));
+				$this->assertEquals($expected, call_user_func(array('numbers', $method), $test_data), $method);
 			}
 			else
 			{
-				$this->assertSame($expected, call_user_func(array('numbers', $method), $test_data));
+				$this->assertSame($expected, call_user_func(array('numbers', $method), $test_data), $method);
 			}
 		}
 		catch (Exception $e)
