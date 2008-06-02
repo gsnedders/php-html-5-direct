@@ -46,7 +46,7 @@
 class common2
 {
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#collect Collect a sequence of characters}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.904#collect Collect a sequence of characters}
 	 *
 	 * @static
 	 * @access public
@@ -85,7 +85,7 @@ class common2
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#skip-whitespace Skip whitespace}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.904#skip-whitespace Skip whitespace}
 	 *
 	 * @static
 	 * @access public
@@ -98,7 +98,7 @@ class common2
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.169#skip- skip Zs characters}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.904#skip- skip Zs characters}
 	 *
 	 * Disclaimer: This assumes we are using UTF-8
 	 *
