@@ -501,7 +501,7 @@ class numbers
 	}
 	
 	/**
-	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.344#lists Lists of integers}
+	 * {@link http://dev.w3.org/cvsweb/~checkout~/html5/spec/Overview.html?rev=1.904#lists Lists of integers}
 	 *
 	 * A valid list of integers is a number of valid integers separated by U+002C COMMA characters, with no other characters (e.g. no space characters). In addition, there might be restrictions on the number of integers that can be given, or on the range of values allowed.
 	 *
@@ -524,8 +524,8 @@ class numbers
 		// (Un-spec'd): Start step 4 loop
 		do
 		{
-			// Step 4: If there is a character in the string input at position position, and it is either U+002C COMMA character or a U+0020 SPACE character, then advance position to the next character in input, or to beyond the end of the string if there are no more characters.
-			if ($position < strlen($input) && ($input[$position] === ',' || $input[$position] === ' '))
+			// Step 4: If there is a character in the string input at position position, and it is either a U+0020 SPACE, U+002C COMMA, or U+003B SEMICOLON character, then advance position to the next character in input, or to beyond the end of the string if there are no more characters.
+			if ($position < strlen($input) && in_array($input[$position], array(' ', ',', ';')))
 			{
 				$position++;
 			}
@@ -536,8 +536,8 @@ class numbers
 				return $numbers;
 			}
 			
-			// Step 6: If the character in the string input at position position is a U+002C COMMA character or a U+0020 SPACE character, return to step 4.
-			if ($input[$position] === ',' || $input[$position] === ' ')
+			// Step 6: If the character in the string input at position position is a U+0020 SPACE, U+002C COMMA, or U+003B SEMICOLON character, then return to step 4.
+			if (in_array($input[$position], array(' ', ',', ';')))
 			{
 				continue;
 			}
@@ -548,11 +548,11 @@ class numbers
 			// Step 8: Let value be 0.
 			$value = 0;
 			
-			// Step 9: Let multiple be 1.
-			$multiple = 1;
-			
-			// Step 10: Let started be false.
+			// Step 9: Let started be false.
 			$started = false;
+			
+			// Step 10: Let got number be false. This variable is set to true when the parser sees a number.
+			$got_number = false;
 			
 			// Step 11: Let finished be false.
 			$finished = false;
@@ -568,25 +568,30 @@ class numbers
 				{
 					// A U+002D HYPHEN-MINUS character
 					case '-':
-						// Substep 1: If finished is true, skip to the next step in the overall set of steps.
+						// Substep 1: If got number is true, let finished be true.
+						if ($got_number)
+						{
+							$finished = true;
+						}
+						// Substep 2: If finished is true, skip to the next step in the overall set of steps.
 						if ($finished)
 						{
 							break 3;
 						}
 						
-						// Substep 2: If started is true or if bogus is true, let negated be false.
-						if ($started || $bogus)
+						// Substep 3: If started is true, let negated be false.
+						if ($started)
 						{
 							$negated = false;
 						}
 						
-						// Substep 3: Otherwise, if started is false and if bogus is false, let negated be true.
+						// Substep 4: Otherwise, if started is false and if bogus is false, let negated be true.
 						if (!$started && !$bogus)
 						{
 							$negated = true;
 						}
 						
-						// Substep 4: Let started be true.
+						// Substep 5: Let started be true.
 						$started = true;
 					break;
 					
@@ -607,29 +612,27 @@ class numbers
 							break 3;
 						}
 						
-						// Substep 2: Let n be the value of the digit, interpreted in base ten, multiplied by multiple.
-						$n = $input[$position] * $multiple;
+						// Substep 2: Multiply value by ten.
+						$value *= 10;
 						
-						// Substep 3: Add n to value.
-						$value += $n;
+						// Substep 3: Add the value of the digit, interpreted in base ten, to value.
+						$value += $input[$position];
 						
-						// Substep 4: If value is greater than zero, multiply multiple by ten.
-						if ($value > 0)
-						{
-							$multiple *= 10;
-						}
-						
-						// Substep 5: Let started be true.
+						// Substep 4: Let started be true.
 						$started = true;
+						
+						// Substep 5: Let got number be true.
+						$got_number = true;
 					break;
-					
-					// A U+002C COMMA character
-					case ',':
 					
 					// A U+0020 SPACE character
 					case ' ':
-						// Substep 1: If started is false, return the numbers list and abort.
-						if (!$started)
+					// A U+002C COMMA character
+					case ',':
+					// A U+003B SEMICOLON character
+					case ';':
+						// Substep 1: If got number is false, return the numbers list and abort. This happens if an entry in the list has no digits, as in "1,2,x,4".
+						if (!$got_number)
 						{
 							return $numbers;
 						}
@@ -648,8 +651,20 @@ class numbers
 					
 					// A U+002E FULL STOP character
 					case '.':
-						// Substep 1: Let finished be true.
-						$finished = true;
+						// Substep 1: If got number is true, let finished be true.
+						if ($got_number)
+						{
+							$finished = true;
+						}
+						
+						// Substep 2: If finished is true, skip to the next step in the overall set of steps.
+						if ($finished)
+						{
+							break 3;
+						}
+						
+						// Substep 3: Let negated be false.
+						$negated = false;
 					break;
 					
 					// Any other character
@@ -678,8 +693,7 @@ class numbers
 				$position++;
 				
 			// Step 15: If position points to a character (and not to beyond the end of input), jump to the big Parser step above.
-			}
-			while ($position < strlen($input));
+			} while ($position < strlen($input));
 			
 			// (Un-spec'd): End step 4 loop
 			break;
@@ -692,11 +706,10 @@ class numbers
 			$value = 0 - $value;
 		}
 		
-		// Step 17: If started is true, then append value to the numbers list, return that list, and abort.
-		if ($started)
+		// Step 17: If got number is true, then append value to the numbers list.
+		if ($got_number)
 		{
 			$numbers[] = $value;
-			return $numbers;
 		}
 		
 		// Step 18: Return the numbers list and abort.
